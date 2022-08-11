@@ -1,3 +1,11 @@
+<?php
+    session_start();
+
+    if(isset($_SESSION['logueado'])){
+       header('Location: html/central.php'); 
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,8 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>U-Book</title>
     <!--Icono de pestaña-->
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="icon" href="/galeria/uBook_Icon3.png">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="icon" href="galeria/uBook_Icon3.png">
     <link href="bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
@@ -31,7 +39,7 @@
                     </div>
 
 
-                    <form action="#" class="col-12 col-lg-6">
+                    <form action="php/login.php" method="POST" class="col-12 col-lg-6">
                         <div class="mb-4  ">
                             <label for="email" class="form-label">Correo Electronico</label>
                             <input type="email" class="form-control" name="email">
@@ -44,16 +52,18 @@
                             <input type="checkbox" name="connected" class="form-check-input" >
                             <label for="connected" class="form-check-label">Mantenerme Conectado</label>
                         </div>
-    
                         <div class="d-grid">
                             
-                            <button type="button" class="btn btn-primary" onclick="loginUsuario()">Iniciar Sesión</button>
+                            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
                         
                         </div>
+                    </form>
+                    
                         <div class="my-3">
                             <span>No tiene cuenta? <a class="nav-link active" aria-current="page" id="registro" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Regístrate</a></span>
-                            <!--InicioModalRegistro-->
-                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                         <!--InicioModalRegistro-->
+                           
+                              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                   <div class="modal-content">
                                     <div class="modal-header" id="modalHeader">  
@@ -62,27 +72,27 @@
                                     </div>
                                     
                                     <div class="modal-body containerRegistro" >
-                                      <form  class="row col-12 col-lg-6" id="formularioRegistro">
+                                      <form  class="row col-12 col-lg-6" id="formularioRegistro" action="php/registro.php" method="post">
                                               <!--prueba de formulario--> 
                                                 <!--Apellido y Nombre-->
                                                 <div class="col-12">
                                                     <label for="usuarioInput" class="form-label">Apellido y Nombre</label>
-                                                    <input type="text" class="form-control" id="usuario" placeholder="Ingrese su Apellido">
+                                                    <input type="text" name="nombre" class="form-control" id="usuario" placeholder="Ingrese su Apellido">
                                                 </div>
                                                 <!--Correo-->
                                                 <div class="col-12">
                                                     <label for="emailInput" class="form-label">Correo</label>
-                                                    <input type="email" class="form-control" id="email" placeholder="Ingrese su correo">
+                                                    <input type="email" name="email" class="form-control" id="email" placeholder="Ingrese su correo">
                                                 </div>
                                                 <!--Contraseña-->
                                                 <div class="col-12">
                                                     <label for="passwordInput" class="form-label">Contraseña</label>
-                                                    <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña">
+                                                    <input type="password" name="password" class="form-control" id="password" placeholder="Ingrese su contraseña">
                                                 </div>
                                                 <!--ConfirmarContraseña-->
                                                 <div class="col-12">
                                                     <label for="passwordInput" class="form-label">Confirma tu Contraseña</label>
-                                                    <input type="password" class="form-control" id="confirPassword" placeholder="Ingrese de nuevo contraseña">
+                                                    <input type="password" name="confirPassword" class="form-control" id="confirPassword" placeholder="Ingrese de nuevo contraseña">
                                                 </div>
                                                 <!--BotondeCondicioes-->
                                                 <div class="col-12">
@@ -90,23 +100,27 @@
                                                         <input type="checkbox" id="checkTerminos" class="form-check-input">
                                                         <label for="checkTerminos" class="form-check-label">Acepto los terminos y condiciones</label>
                                                     </div>
+                                                    <button type="submit" class="btn btn-primary" id="registrarse">Registrarse</button>
                                                 </div>
                                             <!--Alerta-->
                                            
-                                            <!--<div class="alert alert-primary" role="alert" name="alertregis" hidden></div> -->
                                             <div class="alert alert-success" name="alertregis" id="alertregis" role="alert" hidden>Usted se ha registrado exitosamente.</div>
                                       </form>
+                                      <!--PHPREGISTRO-->
+                                
                                     </div>
                                     <div class="modal-footer" id="modalFooter">
                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                      <button type="button" class="btn btn-primary" id="registrarse" onclick="registroUsuario()">Registrarse</button>
+                                      
                                     </div>
                                   </div>
                                 </div>
                               </div>
                               <!--FinModalRegistro-->
+
                         </div>
                     </form>
+                
                     <!--Login de redes--->
                 </div>
                 
@@ -145,9 +159,12 @@
         </div>
     </div>
 
+
+
 <!--JSextras-->
 <script src="/js/registro.js"></script>
-<script src="/js/login.js"></script>    
+<script src="/js/login.js"></script> 
+<script src="/js/regist.js"></script>   
 <!--UUID-->
 <script src="vendor/script/uuid.min.js"></script>
 <!--JSBoostrap-->
